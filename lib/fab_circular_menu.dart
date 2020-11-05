@@ -27,24 +27,24 @@ class FabCircularMenu extends StatefulWidget {
 
   FabCircularMenu(
       {Key key,
-      this.alignment = Alignment.bottomRight,
-      this.ringColor,
-      this.ringDiameter,
-      this.ringWidth,
-      this.fabSize = 64.0,
-      this.fabElevation = 8.0,
-      this.fabColor,
-      this.fabOpenColor,
-      this.fabCloseColor,
-      this.fabIconBorder,
-      this.fabChild,
-      this.fabOpenIcon = const Icon(Icons.menu),
-      this.fabCloseIcon = const Icon(Icons.close),
-      this.fabMargin = const EdgeInsets.all(16.0),
-      this.animationDuration = const Duration(milliseconds: 800),
-      this.animationCurve = Curves.easeInOutCirc,
-      this.onDisplayChange,
-      @required this.children})
+        this.alignment = Alignment.bottomRight,
+        this.ringColor,
+        this.ringDiameter,
+        this.ringWidth,
+        this.fabSize = 64.0,
+        this.fabElevation = 8.0,
+        this.fabColor,
+        this.fabOpenColor,
+        this.fabCloseColor,
+        this.fabIconBorder,
+        this.fabChild,
+        this.fabOpenIcon = const Icon(Icons.menu),
+        this.fabCloseIcon = const Icon(Icons.close),
+        this.fabMargin = const EdgeInsets.all(16.0),
+        this.animationDuration = const Duration(milliseconds: 800),
+        this.animationCurve = Curves.easeInOutCirc,
+        this.onDisplayChange,
+        @required this.children})
       : assert(children != null),
         assert(children.length >= 2),
         super(key: key);
@@ -135,14 +135,14 @@ class FabCircularMenuState extends State<FabCircularMenu>
         alignment: widget.alignment,
         children: <Widget>[
           // Ring
-          Transform(
-            transform:
-                Matrix4.translationValues(_translationX, _translationY, 0.0)
-                  ..scale(_scaleAnimation.value),
-            alignment: FractionalOffset.center,
-            child: OverflowBox(
-              maxWidth: _ringDiameter,
-              maxHeight: _ringDiameter,
+          OverflowBox(
+            maxWidth: _ringDiameter,
+            maxHeight: _ringDiameter,
+            child: Transform(
+              transform:
+              Matrix4.translationValues(_translationX, _translationY, 0.0)
+                ..scale(_scaleAnimation.value),
+              alignment: FractionalOffset.center,
               child: Container(
                 width: _ringDiameter,
                 height: _ringDiameter,
@@ -150,22 +150,22 @@ class FabCircularMenuState extends State<FabCircularMenu>
                   painter: _RingPainter(width: _ringWidth, color: _ringColor),
                   child: _scaleAnimation.value == 1.0
                       ? Transform.rotate(
-                          angle: (2 * pi) *
-                              _rotateAnimation.value *
-                              _directionX *
-                              _directionY,
-                          child: Container(
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: widget.children
-                                  .asMap()
-                                  .map((index, child) => MapEntry(index,
-                                      _applyTransformations(child, index)))
-                                  .values
-                                  .toList(),
-                            ),
-                          ),
-                        )
+                    angle: (2 * pi) *
+                        _rotateAnimation.value *
+                        _directionX *
+                        _directionY,
+                    child: Container(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: widget.children
+                            .asMap()
+                            .map((index, child) => MapEntry(index,
+                            _applyTransformations(child, index)))
+                            .values
+                            .toList(),
+                      ),
+                    ),
+                  )
                       : Container(),
                 ),
               ),
@@ -192,8 +192,8 @@ class FabCircularMenuState extends State<FabCircularMenu>
               child: Center(
                   child: widget.fabChild == null
                       ? (_scaleAnimation.value == 1.0
-                          ? widget.fabCloseIcon
-                          : widget.fabOpenIcon)
+                      ? widget.fabCloseIcon
+                      : widget.fabOpenIcon)
                       : widget.fabChild),
             ),
           ),
@@ -211,15 +211,15 @@ class FabCircularMenuState extends State<FabCircularMenu>
     }
 
     final angle =
-        vector.radians(90.0 / (widget.children.length - 1) * index + angleFix);
+    vector.radians(90.0 / (widget.children.length - 1) * index + angleFix);
 
     return Transform(
         transform: Matrix4.translationValues(
             (-(_ringDiameter / 2) * cos(angle) +
-                    (_ringWidth / 2 * cos(angle))) *
+                (_ringWidth / 2 * cos(angle))) *
                 _directionX,
             (-(_ringDiameter / 2) * sin(angle) +
-                    (_ringWidth / 2 * sin(angle))) *
+                (_ringWidth / 2 * sin(angle))) *
                 _directionY,
             0.0),
         alignment: FractionalOffset.center,
@@ -255,9 +255,9 @@ class FabCircularMenuState extends State<FabCircularMenu>
           curve: Interval(0.0, 0.4, curve: widget.animationCurve));
       _colorAnimation = ColorTween(begin: _fabCloseColor, end: _fabOpenColor)
           .animate(_colorCurve)
-            ..addListener(() {
-              setState(() {});
-            });
+        ..addListener(() {
+          setState(() {});
+        });
     }
   }
 
